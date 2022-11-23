@@ -53,6 +53,17 @@ class GMM2D(td.Distribution):
 
         self.pis_cat_dist = td.Categorical(logits=log_pis)
 
+    def to_dict(self):
+        return {
+            "log_pis": self.log_pis.detach().cpu(),
+            "mus": self.mus.detach().cpu(),
+            "log_sigmas": self.log_sigmas.detach().cpu(),
+            "corrs": self.corrs.detach().cpu(),
+        }
+
+    def from_dict(self, dict):
+        return GMM2D(**dict)
+
     @classmethod
     def from_log_pis_mus_cov_mats(cls, log_pis, mus, cov_mats):
         corrs_sigma12 = cov_mats[..., 0, 1]
