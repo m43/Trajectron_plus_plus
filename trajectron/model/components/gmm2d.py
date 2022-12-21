@@ -61,8 +61,9 @@ class GMM2D(td.Distribution):
             "corrs": self.corrs.detach().cpu(),
         }
 
-    def from_dict(self, dict):
-        return GMM2D(**dict)
+    @staticmethod
+    def from_dict(d):
+        return GMM2D(**d)
 
     @classmethod
     def from_log_pis_mus_cov_mats(cls, log_pis, mus, cov_mats):
